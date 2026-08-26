@@ -369,7 +369,7 @@ The greater Green's function is given by
 \end{align}
 Finally the retarded Green's function is given by
 \begin{align}
-\boxed{G^{R\, i}_j(t) = \theta(t)(G^{>\, i}_j(t) - G^{<\, i}_j(t)) = -i \theta(t) \sum_n \phi^i_n e^{-i \epsilon_n t} \bar{\phi}_j^n  = -i \theta(t) e^{-i h t} } \ \ .  \label{eq:GR}
+\boxed{G^{R\, i}_j(t) = \theta(t)(G^{>\, i}_j(t) - G^{<\, i}_j(t)) = -i \theta(t) \sum_n \phi^i_n e^{-i \epsilon_n t} \bar{\phi}_j^n  = -i \theta(t) e^{-i \mathbf{h} t} } \ \ .  \label{eq:GR}
 \end{align}
 where $\theta(t) = 1$ for $t > 0$ and $\theta(t) = 0$ otherwise.
 In all the results above, the $\nu_n$ are the occupation numbers of the ground state of $N$ fermions, which means they are $\nu_n = 1$ for the $N$ lowest-energy single-particle eigenstates and $\nu_n = 0$ otherwise.
@@ -378,10 +378,9 @@ These results can all be derived using Eqs.~(\ref{eq:phidag_op}) and (\ref{eq:ph
 
 The factor of $-i$ in the definition of $G^R$ helps its Fourier transform have a particularly simple form. The Fourier transform of $f(t) = \theta(t) e^{-i \epsilon t}$ is $\tilde{f}(w) = i/(\omega - \epsilon + i \alpha)$ with $\alpha > 0$ a small broadening factor. Using this fact in Eq.~(\ref{eq:GR}) gives the expression for $G^R$ in frequency space
 \begin{align}
-\boxed{ \tilde{G}^{R\, i}_j(\omega)  = \sum_n \frac{\phi^i_n \bar{\phi}_j^n}{\omega - \epsilon_n + i \alpha} = \frac{1}{(\omega + i \alpha) - h } } \ \ .
+\boxed{ \tilde{G}^{R\, i}_j(\omega)  = \sum_n \frac{\phi^i_n \bar{\phi}_j^n}{\omega - \epsilon_n + i \alpha} = \frac{1}{\omega - \mathbf{h} + i \alpha} } \ \ .
 \end{align}
-This form is known as the Lehmann representation. In the last expression above, the terms in the denominator are matrices and it is understood that $(\omega + i \alpha)$ is multiplied by an identity matrix.
-
+This form is known as the Lehmann representation. In the last expression above, the terms in the denominator are matrices and it is understood that the $\omega$ and $i \alpha$ factors are multiplied by identity matrices.
 
 \subsection{Time Evolution of a Generic Gaussian State}
 
@@ -394,7 +393,7 @@ where the $\hat{d}^\dagger_m$ operators are defined as
 \begin{align}
 \hat{d}^\dagger_m = \sum_j d^j\!_m \hat{c}^\dagger_j \ \ . \label{eq:ddag_c_transform}
 \end{align}
-Define the \emph{propagator} as $\boxed{g(t) = e^{- i h t}}$ in other words $\boxed{g^i\!_j(t) = \sum_n \phi^i\!_n e^{-i \epsilon_n t} \bar{\phi}^n\!_j}$.
+Define the \emph{propagator} as $\boxed{g(t) = e^{- i \mathbf{h} t}}$ in other words $\boxed{g^i\!_j(t) = \sum_n \phi^i\!_n e^{-i \epsilon_n t} \bar{\phi}^n\!_j}$.
 
 Using the fact that $\hat{d}^\dagger_m = \sum_j d^j_m \hat{c}^\dagger_j = \sum_{j, n} (\bar{\phi}^n_j d^j_m ) \hat{\phi}^\dagger_n$, where we have used equations (\ref{eq:ddag_c_transform}) and (\ref{eq:cdag_phi_transform}), it follows that 
 \begin{align}
