@@ -154,8 +154,15 @@ region_labels = 1:(N ÷ 2)
 gf.bond_dimension(ϕ0, region_labels, 1e-7)
 ```
 """
-function bond_dimension(ϕ::GaussianState, labels, cutoff::Real)
+function bond_dimension(ϕ::GaussianState, labels, cutoff::Real; perturbation_strength=0.0)
     C = correlation_matrix(ϕ; labels)
+
+    if !iszero(perturbation_strength)
+        eps = cutoff*perturbation_strength
+        M = randn(size(C)...)
+        C = C + eps*(M'*M)
+    end
+
     occs, _ = la.eigen(C)
     occs = real(occs)
     occs = sort(occs; by = ν -> abs(ν - 1 / 2))
