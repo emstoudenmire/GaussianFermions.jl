@@ -46,13 +46,14 @@ end
     for region in (1:3, 4:N)
         ν = gf.reduced_occupations(ϕ0, region)
         ν_direct = real(eigvals(Matrix(gf.correlation_matrix(ϕ0; labels = region))))
-        @test sort(filter(x -> x > 1e-12, ν)) ≈ sort(filter(x -> x > 1e-12, ν_direct))
+        @test sort(filter(x -> x > 1.0e-12, ν)) ≈ sort(filter(x -> x > 1.0e-12, ν_direct))
         @test gf.entanglement(ν) ≈ gf.entanglement(ϕ0, region)
         @test gf.bond_dimension(ν, cutoff) == gf.bond_dimension(ϕ0, region, cutoff)
     end
     # A pure state is equally entangled on either side of a cut.
     @test gf.entanglement(ϕ0, 1:3) ≈ gf.entanglement(ϕ0, 4:N)
-    @test first(gf.bond_dimension(ϕ0, 1:3, cutoff)) == first(gf.bond_dimension(ϕ0, 4:N, cutoff))
+    @test first(gf.bond_dimension(ϕ0, 1:3, cutoff)) ==
+        first(gf.bond_dimension(ϕ0, 4:N, cutoff))
 
     # Mixed states go through the same helper.
     ϕβ = gf.thermal_state(H, 2.0)

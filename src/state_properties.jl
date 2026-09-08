@@ -98,7 +98,11 @@ that way are exactly zero and contribute to nothing.
 function reduced_occupations(ϕ::GaussianState, labels)
     Φ = Matrix(orbitals(ϕ)[labels, :])
     η = la.Diagonal(occupancy(ϕ))
-    M = size(Φ, 1) <= size(Φ, 2) ? conj.(Φ) * η * transpose(Φ) : sqrt(η) * conj.(Φ' * Φ) * sqrt(η)
+    M = if size(Φ, 1) <= size(Φ, 2)
+        conj.(Φ) * η * transpose(Φ)
+    else
+        sqrt(η) * conj.(Φ' * Φ) * sqrt(η)
+    end
     return clamp.(la.eigvals(la.Hermitian(trace(ϕ) * M)), 0.0, 1.0)
 end
 

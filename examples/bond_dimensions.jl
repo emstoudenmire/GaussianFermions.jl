@@ -1,8 +1,7 @@
-
 import GaussianFermions as gf
 using ITensorMPS
-using Statistics: median
 using ITensors: dim, flux, svd
+using Statistics: median
 
 let
     N = 20
@@ -19,16 +18,15 @@ let
     E0, ϕ0 = gf.ground_state(H; Nf)
     @show E0
 
-    entanglement = zeros(N-1)
-    χs = zeros(Int,N-1)
-    for j=1:(N-1)
+    entanglement = zeros(N - 1)
+    χs = zeros(Int, N - 1)
+    for j in 1:(N - 1)
         region_A = 1:j
 
         entanglement[j] = gf.entanglement(ϕ0, 1:j)
 
         χs[j], trunc_error = gf.bond_dimension(ϕ0, 1:j, trunc_cutoff)
     end
-
 
     #
     # Check with ITensorMPS DMRG
@@ -52,7 +50,6 @@ let
     ψtrunc = truncate(ψ; cutoff = trunc_cutoff)
 
     χs_dmrg = linkdims(ψtrunc)
-
 
     #
     # Report
