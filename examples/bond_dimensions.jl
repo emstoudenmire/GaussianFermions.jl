@@ -1,6 +1,7 @@
 
 import GaussianFermions as gf
 using ITensorMPS
+using Statistics: median
 using ITensors: dim, flux, svd
 
 let
@@ -8,7 +9,6 @@ let
     Nf = N ÷ 2
     t = 1.0
     trunc_cutoff = 1.0e-8
-    perturbation_strength = 0.02
 
     H = gf.GaussianOperator(N)
     for j in 1:(N - 1)
@@ -26,7 +26,7 @@ let
 
         entanglement[j] = gf.entanglement(ϕ0, 1:j)
 
-        χs[j], trunc_error = gf.bond_dimension(ϕ0, 1:j, trunc_cutoff; perturbation_strength)
+        χs[j], trunc_error = gf.bond_dimension(ϕ0, 1:j, trunc_cutoff)
     end
 
 
