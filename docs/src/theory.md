@@ -135,8 +135,8 @@ Only "active" modes with ``\nu_k`` away from 0 and 1 contribute.
 
 This is computed by [`entanglement`](@ref GaussianFermions.entanglement).
 The related function [`bond_dimension`](@ref GaussianFermions.bond_dimension) uses
-the same eigenvalues to estimate the MPS bond dimension needed to represent the
-state across the given bipartition.
+the same eigenvalues to compute the MPS bond dimension needed to represent the
+state across the given bipartition to a given truncation error.
 
 ## Further Reading
 
