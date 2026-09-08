@@ -1,5 +1,5 @@
 import GaussianFermions as gf
-using LinearAlgebra: norm
+using LinearAlgebra: eigvals, norm
 using Test
 
 include("utilities/hamiltonians.jl")
@@ -39,4 +39,23 @@ end
     χ, trunc_err = gf.bond_dimension(ϕ0, region_A, cutoff)
     @test trunc_err < cutoff
     @test 10 < χ < 30
+
+    # The reduced occupations are the eigenvalues of the reduced correlation
+    # matrix, whichever of the two equivalent matrices was diagonalized: a region
+    # smaller than the orbital count (1:3) and one larger than it (4:10).
+    for region in (1:3, 4:N)
+        ν = gf.reduced_occupations(ϕ0, region)
+        ν_direct = real(eigvals(Matrix(gf.correlation_matrix(ϕ0; labels = region))))
+        @test sort(filter(x -> x > 1e-12, ν)) ≈ sort(filter(x -> x > 1e-12, ν_direct))
+        @test gf.entanglement(ν) ≈ gf.entanglement(ϕ0, region)
+        @test gf.bond_dimension(ν, cutoff) == gf.bond_dimension(ϕ0, region, cutoff)
+    end
+    # A pure state is equally entangled on either side of a cut.
+    @test gf.entanglement(ϕ0, 1:3) ≈ gf.entanglement(ϕ0, 4:N)
+    @test first(gf.bond_dimension(ϕ0, 1:3, cutoff)) == first(gf.bond_dimension(ϕ0, 4:N, cutoff))
+
+    # Mixed states go through the same helper.
+    ϕβ = gf.thermal_state(H, 2.0)
+    ν_direct = real(eigvals(Matrix(gf.correlation_matrix(ϕβ; labels = 4:N))))
+    @test sort(gf.reduced_occupations(ϕβ, 4:N)) ≈ sort(ν_direct)
 end

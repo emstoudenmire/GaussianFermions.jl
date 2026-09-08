@@ -16,6 +16,7 @@ GaussianFermions.density
 ## Entanglement
 
 ```@docs
+GaussianFermions.reduced_occupations
 GaussianFermions.entanglement
 GaussianFermions.bond_dimension
 ```
