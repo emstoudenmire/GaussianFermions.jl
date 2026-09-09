@@ -454,7 +454,7 @@ Notably, for low temperatures $\beta \rightarrow \infty$, $f_\beta(\epsilon \leq
 Consider a pure Gaussian state $\ket{\psi}$ with correlation matrix $C_i\,^j = \bra{\psi} \hat{c}^\dagger_i \hat{c}^j \ket{\psi}$. 
 Our goal is to obtain a Schmidt decomposition across two disjoint regions $A$ and $B$ meaning 
 \begin{align}
-\ket{\psi} = \sum_\mu w_\mu \ket{\mu}_A \ket{\mu}_B
+\ket{\psi} = \sum_\mu w_\mu \ket{\mu}_A \ket{\mu}_B \label{eq:schmidt}
 \end{align}
 where $\ket{\mu}_A$ is an orthonormal basis of $A$ and  $\ket{\mu}_B$ an orthonormal basis of $B$. 
 To find this decomposition, it will turn out to be sufficient to diagonalize the block of $C$ restricted to $A$, called $C_{AA}$. Below we will find an
@@ -490,7 +490,7 @@ C_{BB} C_{BA} & = C_{BA} (1 - C_{AA})  \ \ .
 Without loss of generality, take the linear size $m$ of the space $B$ to be greater than or equal to linear size $n$ of $A$, so $m \leq n$.
 Then $C_{AA}$ is an $n \times n$ matrix, $C_{BB}$ is $m \times m$, and $C_{AB}$ is $n \times m$.
 
-To obtain the Schmidt decomposition, first compute the singular value decomposition of $C_{AB}$
+To obtain the Schmidt decomposition Eq.~(\ref{eq:schmidt}), first compute the singular value decomposition of $C_{AB}$
 \begin{align}
 C_{AB} = A \Lambda B^\dagger \ \ .
 \end{align}
@@ -509,7 +509,7 @@ C_{AA} = A \Omega A^\dagger
 \end{align}
 where $\Omega$ is a diagonal matrix $\Omega = \text{diag}(\nu_1, \nu_2, \ldots)$ of ``occupations'' ($r$ of these). 
 Equation~(\ref{eq:svd_relation}) implies the eigenvalues $\nu_j$ of $C_{AA}$ are related to the 
-singular values of $C_{AB}$ through 
+singular values $\lambda_j$ of $C_{AB}$ through 
 \begin{align}
 \lambda_j = \sqrt{\nu_j (1-\nu_j)} \ \ .
 \end{align}
@@ -533,16 +533,44 @@ These $\tilde{\nu}_j = 1$ orbitals have spatial support which is entirely inside
 
 \subsection{Construction of Filled and Empty Orbitals}
 
-%\section{Mathematical Results}
-%\textbf{Dynamics}. All of these results assume the Hamiltonian $\hat{H} = h^i_j \hat{c}^\dagger_i \hat{c}^j$ has a hopping matrix which can be diagonalizedas $h^i_j = \phi^i_n \epsilon_n \phi^n_j$. The ground state of $\hat{H}$ is $\ket{\Phi_0}$.
-%\begin{itemize}
-%\item \emph{Heisenberg time evolution of operators:} Define the operators $\hat{\phi}^\dagger_n = \sum_n \phi^j_n \hat{c}^\dagger_j$ and $\hat{\phi}^n = \sum_n \bar{\phi}_j^n \hat{c}^j$. These evolve in the Heisenberg picture as \result{$\hat{\phi}^n(t) = e^{i \hat{H} t} \hat{\phi}^n e^{-i \hat{H} t} = e^{- i\epsilon_n t} \hat{\phi}^n$} and \textcolor{blue}{$\hat{\phi}^\dagger_n(t) = e^{i \epsilon_n t} \hat{\phi}^\dagger_n$}.
-%\item \emph{Lesser Greens function:} Defined as $G^{<\, i}_j(t)= i \bra{\Phi_0} \hat{c}^\dagger_j \hat{c}^i(t) \ket{\Phi_0}$, it is given by \result{$G^{<\, i}_j(t) = i \sum_n \gamma_n  \phi^i_n e^{-i \epsilon_n t}  \bar{\phi}_j^n $} where $\gamma_n$ is the occupancy of the ground state in the $\phi$ basis.
-%\item \emph{Greater Greens function:} Defined as $G^{>\, i}_j(t) = -i \bra{\Phi_0} \hat{c}^i(t) \hat{c}^\dagger_j \ket{\Phi_0}$, it is given by \mbox{\result{$G^{>\, i}_j(t) = -i \sum_n (1-\gamma_n) \phi^i_n e^{-i \epsilon_n t} \bar{\phi}_j^n $}} where $\gamma_n$ is the occupancy of the ground state in the $\phi$ basis.
-%\item \emph{Retarded Greens function:} Defined as $G^{R\, i}_j(t) = \theta(t)(G^{>\, i}_j(t) - G^{<\, i}_j(t)) $, it is given by \result{$G^{R\, i}_j(t) = -i \theta(t) \sum_n \phi^i_n e^{-i \epsilon_n t} \bar{\phi}_j^n  = -i \theta(t) e^{-i h t}$}.
-%\item \emph{Propagator:} Define the propagator as $g^i_j(t) = i(G^{>\, i}_j(t) - G^{<\, i}_j(t))$. It can be written simply as \result{$g^i_j(t) = e^{-i h t} = \sum_n \phi^i_n e^{-i \epsilon_n t} \bar{\phi}_j^n$}.
-%\item \emph{Evolution of correlation matrix:} For a pure, Gaussian state $\ket{f}$ with correlation matrix $C_i^j = \bra{f} \hat{c}^\dagger_i \hat{c}^j \ket{f} = \bar{f}_i^n \gamma_n f^j_n$, the orbitals evolve, in the Schr\"odinger picture, as $f^j_n(t) = g^i_j(t) f^j_n$. So \result{$C_i^j(t) =  \bar{g}^{i'}_i(t) C_{i'}^{j'}  g^j_{j'}(t)$}.
-%\end{itemize}
-
+From the above analysis we can construct the Schmidt states by defining operators
+\begin{align}
+\hat{\psi}^\dagger_j = \sum_{j'} \psi^{(1) j'}_j \hat{c}^\dagger_{j'} \ \ .
+\end{align}
+As will be shown below, these operators create ``occupied natural orbitals''---orbitals which are
+eigenvectors of the correlation matrix $C$ with eigenvalue 1---which implies that
+the state can be written as:
+\begin{align}
+\ket{\psi} = \prod_{j} \hat{\psi}^\dagger_j \ket{0}
+\end{align}
+Using the above analysis of the correlation matrix and defining columns of the $A$ and $B$ matrices as
+\begin{align}
+(\vec{a}_j)^{i} = A^i\,_j  \\
+(\vec{b}_j)^{i} = B^i\,_j  \\
+\end{align}
+the occupied orbitals $(\vec{\psi}^{(1)}_j)^{j'} = \psi^{(1) j'}_j$ are 
+\begin{align}
+\vec{\psi}^{(1)}_j = \begin{bmatrix}
+\sqrt{\nu_j} & \vec{a}_j \\
+\sqrt{1-\nu_j} &  \vec{b}_j \\
+\end{bmatrix} \label{eq:occupied_orbital}
+\end{align}
+For completeness, one can also find the unoccupied orbitals to be 
+\begin{align}
+\vec{\psi}^{(0)}_j = \begin{bmatrix}
+\sqrt{1-\nu_j} & \vec{a}_j \\
+- \sqrt{\nu_j} &  \vec{b}_j \\
+\end{bmatrix}
+\end{align}
+Using (\ref{eq:occupied_orbital}), the occupied orbital creation operators can be written as
+\begin{align}
+\hat{\psi}^\dagger_j & = \sqrt{\nu_j} \ \hat{a}^\dagger_j + \sqrt{1-\nu_j} \ \hat{b}^\dagger_{j} \\
+\end{align}
+where
+\begin{align}
+\hat{a}^\dagger_j & = \sum_{i \in A} (\vec{a}_j)^i \hat{c}^\dagger_i \\
+\hat{b}^\dagger_j & = \sum_{i \in B} (\vec{b}_j)^i \hat{c}^\dagger_i
+\end{align}
+are creation operators supported in regions $A$ and $B$ respectively.
 
 \end{document}
